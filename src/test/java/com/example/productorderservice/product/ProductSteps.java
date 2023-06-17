@@ -9,7 +9,7 @@ public class ProductSteps {
     public ProductSteps() {
     }
 
-    public ExtractableResponse<Response> 상품등록요청(AddProductRequest request) {
+    public static ExtractableResponse<Response> 상품등록요청(AddProductRequest request) {
         return RestAssured.given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
@@ -19,7 +19,7 @@ public class ProductSteps {
                 .log().all().extract();
     }
 
-    public AddProductRequest 상품등록요청_생성() {
+    public static AddProductRequest 상품등록요청_생성() {
         final String name = "상품명";
         final int price = 1000;
         final DiscountPolicy discountPolicy = DiscountPolicy.NONE;
