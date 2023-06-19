@@ -40,7 +40,11 @@ class ProductService {
         return ResponseEntity.ok(response);
     }
 
-    public void updateProduct(Long productId, UpdateProductRequest request) {
+    @PatchMapping("/{productId}")
+    @Transactional
+    public ResponseEntity<Void> updateProduct(
+            @PathVariable final Long productId, @RequestBody final UpdateProductRequest request
+    ) {
         // 프로덕트 가져와서
         final Product product = productPort.getProduct(productId);
 
@@ -49,5 +53,6 @@ class ProductService {
 
         // 저장
         productPort.save(product);
+        return ResponseEntity.ok().build();
     }
 }
