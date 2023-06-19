@@ -1,34 +1,49 @@
-//package com.example.productorderservice.product;
+package com.example.productorderservice.product;
+
+import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+@ExtendWith(MockitoExtension.class)
+class ProductServiceTest {
+    private ProductService productService;
+    private ProductPort productPort;
+//    private StubProductPort productPort = new StubProductPort();
+
+    @BeforeEach
+    void setUp() {
+        productPort = Mockito.mock(ProductPort.class);
+        productService = new ProductService(productPort);
+    }
+
+    @Test
+    void 상품수정() {
+        final Long productId = 1L;
+        final UpdateProductRequest request = new UpdateProductRequest("상품 수정", 2000, DiscountPolicy.NONE);
+        final Product product = new Product("상품명", 1000, DiscountPolicy.NONE);
+//        productPort.getProduct_will_return = product;
+        Mockito.when(productPort.getProduct(productId)).thenReturn(product);
+
+        productService.updateProduct(productId, request);
+
+        Assertions.assertThat(product.getName()).isEqualTo("상품 수정");
+        Assertions.assertThat(product.getPrice()).isEqualTo(2000);
+    }
+
+//    private static class StubProductPort implements ProductPort {
+//        public Product getProduct_will_return;
 //
-//import org.junit.jupiter.api.Test;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.test.context.SpringBootTest;
+//        @Override
+//        public void save(Product product) {
 //
-//import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+//        }
 //
-///*
-//상품 등록에선 서비스 -> 포트 -> 어댑터 -> 리포지토리 호출하는 풀로우 만들기 위해서 pojo 클래스 먼저 만들었는데
-//간단한 상품 조회는 처음부터 SpringBootTest 해도 무방
-//
-//--> api 테스트로 전환했기 때문에 사용 x
-// */
-//
-//@SpringBootTest
-//class ProductServiceTest {
-//    @Autowired
-//    private ProductService productService;
-//
-//    @Test
-//    void 상품조회() {
-//        // 상품등록
-//        productService.addProduct(ProductSteps.상품등록요청_생성());
-//        final long productId = 1L;
-//
-//        // 상품조회
-//        final GetProductResponse response = productService.getProduct(productId);
-//
-//        // 상품 응답 검증
-//        // 보통 검증 먼저 만든다 -> 어떤 것을 검증하기 위해 어떠한 기능이 필요한 지
-//        assertThat(response).isNotNull();
+//        @Override
+//        public Product getProduct(Long productId) {
+//            return getProduct_will_return;
+//        }
 //    }
-//}
+}

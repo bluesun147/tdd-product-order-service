@@ -39,4 +39,15 @@ class ProductService {
 
         return ResponseEntity.ok(response);
     }
+
+    public void updateProduct(Long productId, UpdateProductRequest request) {
+        // 프로덕트 가져와서
+        final Product product = productPort.getProduct(productId);
+
+        // 업데이트 후
+        product.update(request.name(), request.price(), request.discountPolicy());
+
+        // 저장
+        productPort.save(product);
+    }
 }
