@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "orders")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
+public
 class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,10 @@ class Order {
         this.product = product;
         this.quantity = quantity;
         Assert.notNull(product, "상품은 필수입니다.");
+    }
+
+    public int getTotalPrice() {
+        return product.getDiscountedPrice() * quantity;
     }
 //    public void assignId(final Long aLong) {
 //        this.id = id;
