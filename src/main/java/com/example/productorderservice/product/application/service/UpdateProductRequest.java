@@ -1,5 +1,6 @@
-package com.example.productorderservice.product;
+package com.example.productorderservice.product.application.service;
 
+import com.example.productorderservice.product.domain.DiscountPolicy;
 import org.springframework.util.Assert;
 
 //    private static class UpdateProductRequest {
@@ -16,8 +17,8 @@ import org.springframework.util.Assert;
 //    }
 
 // record - 위의 코드와 같은 내용
-record UpdateProductRequest(String name, int price, DiscountPolicy discountPolicy) {
-    UpdateProductRequest {
+public record UpdateProductRequest(String name, int price, DiscountPolicy discountPolicy) {
+    public UpdateProductRequest {
         Assert.hasText(name, "상품명은 필수입니다.");
     }
 }
